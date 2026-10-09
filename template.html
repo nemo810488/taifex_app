@@ -60,7 +60,7 @@ svg{display:block;width:100%;height:auto;font-family:'IBM Plex Mono',monospace}
 .legend i{display:inline-block;width:10px;height:3px;border-radius:2px;margin-right:5px;vertical-align:middle}
 </style></head>
 <body><div class="wrap">
-<header><div><h1 data-i="title">TAIFEX // BROKER SHARE</h1><div class="sub" id="sub"></div></div><div style="display:flex;gap:10px;align-items:center"><div class="seg lang" id="freq"><button data-f="daily" class="on" data-i="daily">Daily</button><button data-f="monthly" data-i="monthly">Monthly</button></div><div class="seg lang"><button data-l="en" class="on">EN</button><button data-l="zh">繁中</button></div></div></header>
+<header><div><h1 data-i="title">TAIFEX // BROKER SHARE</h1><div class="sub" id="sub"></div></div><div style="display:flex;gap:10px;align-items:center"><div class="seg lang" id="freq"><button data-f="daily" class="on" data-i="daily">Daily</button><button data-f="monthly" data-i="monthly">Monthly</button></div><div class="seg lang" id="langSeg"><button data-l="en" class="on">EN</button><button data-l="zh">繁中</button></div></div></header>
 <div class="controls">
  <div class="cg"><label data-i="date">Date</label><select id="date"></select></div>
  <div class="cg"><label data-i="view">View</label><select id="view"><option value="all" data-i="vAll">All (Fut + Opt)</option><option value="F" data-i="vF">Futures</option><option value="O" data-i="vO">Options</option><option value="each" data-i="vEach">Each Product</option></select></div>
@@ -96,7 +96,7 @@ let lang='en'; const T=k=>I18N[lang][k];
 function applyLang(){document.documentElement.lang=lang==='zh'?'zh-Hant':'en';document.querySelectorAll('[data-i]').forEach(e=>e.textContent=T(e.dataset.i));
  $('sub').textContent=T('snapshot')+' '+D.fetched+' · '+fmt(dates[0])+' → '+fmt(dates[dates.length-1])+' · '+dates.length+' '+(freq==='daily'?T('sessions'):T('months'));
  document.querySelector('[data-i="date"]').textContent=freq==='daily'?T('date'):T('month');}
-document.querySelectorAll('.seg.lang button').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.seg.lang button').forEach(x=>x.classList.remove('on'));b.classList.add('on');lang=b.dataset.l;brokers=lang==='zh'?brokersZh:withFallback(brokersEn);applyLang();update();}));
+document.querySelectorAll('#langSeg button').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('#langSeg button').forEach(x=>x.classList.remove('on'));b.classList.add('on');lang=b.dataset.l;brokers=lang==='zh'?brokersZh:withFallback(brokersEn);applyLang();update();}));
 const DEFAULT_BROKERS=['元大期貨','凱基期貨','群益期貨'];
 let selected=new Set(Object.keys(brokers).filter(c=>DEFAULT_BROKERS.includes(brokers[c])));
 let mode='share', trendOpen=false;
