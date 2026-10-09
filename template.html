@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>TAIFEX Broker Market Share</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);--bg:#0a0e17;--surface:#111827;--surface2:#1a2235;--border:#1e2d42;--accent:#00d4ff;--accent2:#00ff9d;--text:#e2e8f0;--muted:#64748b;--dim:#94a3b8}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:'IBM Plex Sans',system-ui,sans-serif;min-height:100vh;padding:20px}
+.wrap{max-width:1100px;margin:0 auto}
+header{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:12px;margin-bottom:22px;padding-bottom:16px;border-bottom:1px solid var(--border)}
+h1{font-family:'IBM Plex Mono',monospace;font-size:20px;color:var(--accent)}
+.sub,.mono{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);margin-top:4px}
+.controls{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:16px;display:flex;gap:14px;align-items:flex-end;flex-wrap:wrap;margin-bottom:20px}
+.cg{display:flex;flex-direction:column;gap:5px}
+label{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
+select{background:var(--surface2);border:1px solid var(--border);color:var(--text);font-family:'IBM Plex Mono',monospace;font-size:13px;padding:8px 12px;border-radius:5px;outline:none;min-width:150px}
+select:focus{border-color:var(--accent)}
+.btn{padding:9px 16px;border-radius:5px;border:1px solid var(--accent2);background:transparent;color:var(--accent2);font-family:'IBM Plex Mono',monospace;font-size:12px;cursor:pointer;white-space:nowrap;margin-left:auto}
+.btn:hover{background:rgba(0,255,157,.08)}
+.btn.on{background:var(--accent2);color:#0a0e17}
+.summary{display:flex;gap:12px;margin-bottom:16px;flex-wrap:wrap}
+.sc{background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:12px 16px;flex:1;min-width:120px}
+.sc-l{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px}
+.sc-v{font-family:'IBM Plex Mono',monospace;font-size:17px;font-weight:600;color:var(--accent)}
+.sc-s{font-size:11px;color:var(--muted);margin-top:2px}
+.tbl-wrap{background:var(--surface);border:1px solid var(--border);border-radius:8px;overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:13px}
+thead tr{background:var(--surface2);border-bottom:1px solid var(--border)}
+th{padding:11px 14px;text-align:left;font-family:'IBM Plex Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);white-space:nowrap}
+th.r{text-align:right}
+td{padding:10px 14px;border-bottom:1px solid rgba(30,45,66,.5);color:var(--dim)}
+td.r{text-align:right;font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--text)}
+tbody tr:hover{background:rgba(0,212,255,.04)}
+tbody tr:last-child td{border-bottom:none}
+.rank{font-family:'IBM Plex Mono',monospace;font-weight:600}
+.r1{color:#ffd700}.r2{color:#c0c0c0}.r3{color:#cd7f32}.rx{color:var(--muted)}
+.bn{color:var(--text);font-weight:500}.bc{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);margin-left:5px}
+.bar-w{display:flex;align-items:center;gap:8px;min-width:160px}
+.bar-bg{flex:1;height:5px;background:var(--border);border-radius:3px;overflow:hidden}
+.bar-f{height:100%;background:var(--accent);border-radius:3px}
+.pct{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--accent);min-width:44px;text-align:right}
+.state{padding:50px 20px;text-align:center;color:var(--muted);font-family:'IBM Plex Mono',monospace;font-size:13px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:16px;margin-bottom:16px}
+.card h2{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-bottom:12px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.card h2 span.t{color:var(--accent)}
+.chart{width:100%;overflow-x:auto}
+svg{display:block;width:100%;height:auto;font-family:'IBM Plex Mono',monospace}
+.axis{stroke:var(--border)} .grid{stroke:rgba(30,45,66,.6)} .lbl{fill:var(--muted);font-size:10px}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px;max-height:120px;overflow-y:auto}
+.chip{font-family:'IBM Plex Mono',monospace;font-size:11px;padding:4px 10px;border-radius:14px;border:1px solid var(--border);color:var(--dim);cursor:pointer;background:var(--surface2);user-select:none}
+.chip.on{color:#0a0e17;border-color:transparent;font-weight:600}
+.seg.lang{margin-left:0;align-self:center}
+.seg{display:inline-flex;border:1px solid var(--border);border-radius:5px;overflow:hidden;margin-left:auto}
+.seg button{background:transparent;border:0;color:var(--dim);font-family:'IBM Plex Mono',monospace;font-size:11px;padding:5px 10px;cursor:pointer}
+.seg button.on{background:var(--accent);color:#0a0e17}
+.legend{display:flex;flex-wrap:wrap;gap:12px;margin-top:8px;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--dim)}
+.legend i{display:inline-block;width:10px;height:3px;border-radius:2px;margin-right:5px;vertical-align:middle}
+</style></head>
+<body><div class="wrap">
+<header><div><h1 data-i="title">TAIFEX // BROKER SHARE</h1><div class="sub" id="sub"></div></div><div class="seg lang"><button data-l="en" class="on">EN</button><button data-l="zh">繁中</button></div></header>
+<div class="controls">
+ <div class="cg"><label data-i="date">Date</label><select id="date"></select></div>
+ <div class="cg"><label data-i="view">View</label><select id="view"><option value="all" data-i="vAll">All (Fut + Opt)</option><option value="F" data-i="vF">Futures</option><option value="O" data-i="vO">Options</option><option value="each" data-i="vEach">Each Product</option></select></div>
+ <div class="cg" id="pg" style="display:none"><label data-i="product">Product</label><select id="product"></select></div>
+ <button class="btn" id="trendBtn">📈 <span data-i="trend">TREND</span></button>
+</div>
+<div id="trend" style="display:none">
+ <div class="card"><h2><span data-i="totalVol">Total volume</span> · <span class="t" id="t1lbl"></span></h2><div class="chart" id="c1"></div></div>
+ <div class="card"><h2><span data-i="brokers">Brokers</span> · <span class="t" id="t2lbl"></span>
+   <div class="seg"><button data-m="share" class="on" data-i="sharePct">Share %</button><button data-m="volume" data-i="volume">Volume</button></div></h2>
+   <div class="chips" id="chips"></div><div class="chart" id="c2"></div><div class="legend" id="leg"></div></div>
+</div>
+<div id="content"></div>
+</div>
+<script id="data" type="application/json">__DATA__</script>
+<script>
+const D=JSON.parse(document.getElementById('data').textContent);
+const rows=D.rows, brokersZh=D.brokers, brokersEn={"F001000": "Cathay Futures", "F002000": "SinoPac Futures", "F002999": "SinoPac Futures (Prop)", "F004000": "KGI Futures", "F004999": "KGI Futures (Prop)", "F005000": "IBF Futures", "F005999": "IBF Futures (Prop)", "F008000": "President Futures", "F008999": "President Futures (Prop)", "F014000": "Hua Nan Futures", "F020000": "Capital Futures", "F020999": "Capital Futures (Prop)", "F021000": "Yuanta Futures", "F021999": "Yuanta Futures (Prop)", "F026000": "Fubon Futures", "F026999": "Fubon Futures (Prop)", "F029000": "Concord Futures", "F029999": "Concord Futures (Prop)", "F030000": "Mega Futures", "F034999": "Optiver Futures (Prop)", "F039000": "Ta Chang Futures", "F040000": "Taishin Futures", "F040999": "Taishin Futures (Prop)", "S102999": "Taiwan Cooperative Securities (Prop)", "S126000": "Horizon Securities", "S126999": "Horizon Securities (Prop)", "S144000": "Merrill Lynch Securities", "S147000": "Morgan Stanley Taiwan", "S159000": "Citigroup Global Markets Taiwan", "S218000": "Oriental Securities", "S218999": "Oriental Securities (Prop)", "S509999": "Hua Nan Securities (Prop)", "S526000": "Mega Hwa Securities", "S538000": "First Securities", "S551999": "SinoPac Securities (Prop)", "S585999": "President Securities (Prop)", "S616000": "CTBC Securities", "S616999": "CTBC Securities (Prop)", "S700999": "Mega Securities (Prop)", "S779999": "IBF Securities (Prop)", "S844000": "J.P. Morgan Securities Taiwan", "S856000": "Shin Kong Securities", "S884000": "E.SUN Securities", "S884999": "E.SUN Securities (Prop)", "S888999": "Cathay Securities (Prop)", "S890999": "BNP Paribas Securities Taiwan (Prop)", "S910999": "Capital Securities (Prop)", "S920999": "KGI Securities (Prop)", "S960999": "Fubon Securities (Prop)", "S980999": "Yuanta Securities (Prop)", "S9B0999": "Taishin Securities (Prop)"};
+const withFallback=m=>Object.fromEntries(Object.keys(brokersZh).map(c=>[c,m[c]||brokersZh[c]]));
+let brokers=brokersZh;
+const dates=[...new Set(rows.map(r=>r[1]))].sort();
+const fmt=d=>d.slice(0,4)+'-'+d.slice(4,6)+'-'+d.slice(6,8);
+const fv=n=>n.toLocaleString();
+const rc=r=>r===1?'r1':r===2?'r2':r===3?'r3':'rx';
+const $=id=>document.getElementById(id);
+const COLORS=['#00d4ff','#00ff9d','#ff6b35','#ffd700','#c084fc','#f472b6','#60a5fa','#34d399','#fb923c','#a3e635','#e879f9','#fbbf24'];
+
+const I18N={en:{title:'TAIFEX // BROKER SHARE',date:'Date',view:'View',product:'Product',vAll:'All (Fut + Opt)',vF:'Futures',vO:'Options',vEach:'Each Product',trend:'TREND',totalVol:'Total volume',brokers:'Brokers',sharePct:'Share %',volume:'Volume',
+ snapshot:'DATA SNAPSHOT',sessions:'SESSIONS',rank:'Rank',broker:'Broker',share:'Market Share',total:'Total Volume',contracts:'contracts',top:'#1 Broker',active:'Brokers Active',participants:'participants',shareOf:'share',nodata:'No data',totalLine:'Total'},
+zh:{title:'期交所 // 期貨商市占',date:'日期',view:'檢視',product:'商品',vAll:'全部（期貨＋選擇權）',vF:'期貨',vO:'選擇權',vEach:'個別商品',trend:'趨勢',totalVol:'總成交量',brokers:'期貨商',sharePct:'市占 %',volume:'成交量',
+ snapshot:'資料快照',sessions:'個交易日',rank:'排名',broker:'期貨商',share:'市占率',total:'總成交量',contracts:'口',top:'第一名',active:'期貨商數',participants:'家',shareOf:'市占',nodata:'無資料',totalLine:'總計'}};
+let lang='en'; const T=k=>I18N[lang][k];
+function applyLang(){document.documentElement.lang=lang==='zh'?'zh-Hant':'en';document.querySelectorAll('[data-i]').forEach(e=>e.textContent=T(e.dataset.i));
+ $('sub').textContent=T('snapshot')+' '+D.fetched+' · '+fmt(dates[0])+' → '+fmt(dates[dates.length-1])+' · '+dates.length+' '+T('sessions');}
+document.querySelectorAll('.seg.lang button').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.seg.lang button').forEach(x=>x.classList.remove('on'));b.classList.add('on');lang=b.dataset.l;brokers=lang==='zh'?brokersZh:withFallback(brokersEn);applyLang();update();}));
+const DEFAULT_BROKERS=['元大期貨','凱基期貨','群益期貨'];
+let selected=new Set(Object.keys(brokers).filter(c=>DEFAULT_BROKERS.includes(brokers[c])));
+let mode='share', trendOpen=false;
+
+applyLang();
+$('date').innerHTML=dates.slice().reverse().map(d=>`<option value="${d}">${fmt(d)}</option>`).join('');
+
+function products(date){const s=new Set();for(const r of rows)if(r[1]===date)s.add(r[2]);return[...s].sort();}
+function filt(){const view=$('view').value,p=$('product').value;
+  if(view==='each')return{f:r=>r[2]===p,label:p};
+  if(view==='all')return{f:r=>true,label:T('vAll')};
+  return{f:r=>r[4]===view,label:view==='F'?T('vF'):T('vO')};}
+function rank(filter){const m={};for(const r of rows)if(filter(r))m[r[0]]=(m[r[0]]||0)+r[3];
+ const arr=Object.entries(m).map(([c,v])=>({code:c,name:brokers[c],volume:v})).sort((a,b)=>b.volume-a.volume);
+ const total=arr.reduce((s,x)=>s+x.volume,0);return arr.map((x,i)=>({...x,rank:i+1,share:total?x.volume/total*100:0,total}));}
+function render(data,label,date){if(!data.length){$('content').innerHTML='<div class="state">'+T('nodata')+'</div>';return;}
+ const t=data[0];let h=`<div class="summary">
+ <div class="sc"><div class="sc-l">${T('view')}</div><div class="sc-v" style="font-size:14px">${label}</div><div class="sc-s">${fmt(date)}</div></div>
+ <div class="sc"><div class="sc-l">${T('total')}</div><div class="sc-v">${fv(t.total)}</div><div class="sc-s">${T('contracts')}</div></div>
+ <div class="sc"><div class="sc-l">${T('top')}</div><div class="sc-v" style="font-size:13px">${t.name}</div><div class="sc-s">${t.share.toFixed(1)}% ${T('shareOf')}</div></div>
+ <div class="sc"><div class="sc-l">${T('active')}</div><div class="sc-v">${data.length}</div><div class="sc-s">${T('participants')}</div></div></div>
+ <div class="tbl-wrap"><table><thead><tr><th style="width:56px">${T('rank')}</th><th>${T('broker')}</th><th class="r">${T('volume')}</th><th style="min-width:200px">${T('share')}</th></tr></thead><tbody>`;
+ for(const r of data)h+=`<tr><td><span class="rank ${rc(r.rank)}">#${r.rank}</span></td><td><span class="bn">${r.name}</span><span class="bc">${r.code}</span></td><td class="r">${fv(r.volume)}</td><td><div class="bar-w"><div class="bar-bg"><div class="bar-f" style="width:${r.share}%"></div></div><span class="pct">${r.share.toFixed(2)}%</span></div></td></tr>`;
+ $('content').innerHTML=h+'</tbody></table></div>';}
+
+// ---- line chart (inline SVG) ----
+function lineChart(el,series,yfmt){const W=1000,H=320,L=70,R=20,T=16,B=44;
+ const n=dates.length, xs=i=>L+(n===1?0:(W-L-R)*i/(n-1));
+ let vals=series.flatMap(s=>s.data).filter(v=>v!=null); if(!vals.length){el.innerHTML='<div class="state">'+T('nodata')+'</div>';return;}
+ let max=Math.max(...vals),min=0; if(max===0)max=1; max*=1.08;
+ const ys=v=>T+(H-T-B)*(1-(v-min)/(max-min));
+ let g='';for(let k=0;k<=4;k++){const v=min+(max-min)*k/4,y=ys(v);g+=`<line class="grid" x1="${L}" x2="${W-R}" y1="${y}" y2="${y}"/><text class="lbl" x="${L-8}" y="${y+3}" text-anchor="end">${yfmt(v)}</text>`;}
+ const step=Math.max(1,Math.ceil(n/12));
+ for(let i=0;i<n;i+=step)g+=`<text class="lbl" x="${xs(i)}" y="${H-B+18}" text-anchor="middle">${dates[i].slice(4,6)}/${dates[i].slice(6,8)}</text>`;
+ let p='';for(const s of series){let d='',open=false;s.data.forEach((v,i)=>{if(v==null){open=false;return;}d+=(open?'L':'M')+xs(i).toFixed(1)+' '+ys(v).toFixed(1);open=true;});
+  p+=`<path d="${d}" fill="none" stroke="${s.color}" stroke-width="2.2" stroke-linejoin="round"/>`;
+  s.data.forEach((v,i)=>{if(v!=null)p+=`<circle cx="${xs(i)}" cy="${ys(v)}" r="3" fill="${s.color}"><title>${s.name} · ${fmt(dates[i])} · ${yfmt(v,true)}</title></circle>`;});}
+ el.innerHTML=`<svg viewBox="0 0 ${W} ${H}" style="min-width:640px">${g}<line class="axis" x1="${L}" x2="${W-R}" y1="${H-B}" y2="${H-B}"/>${p}</svg>`;}
+const fmtK=(v,full)=>full?fv(Math.round(v)):(v>=1e6?(v/1e6).toFixed(1)+'M':v>=1e3?(v/1e3).toFixed(0)+'k':Math.round(v));
+const fmtP=(v,full)=>v.toFixed(full?2:1)+'%';
+
+function renderTrend(){const {f,label}=filt();$('t1lbl').textContent=label;$('t2lbl').textContent=label;
+ const byDate={};for(const d of dates)byDate[d]={total:0,b:{}};
+ for(const r of rows)if(f(r)){const o=byDate[r[1]];o.total+=r[3];o.b[r[0]]=(o.b[r[0]]||0)+r[3];}
+ lineChart($('c1'),[{name:T('totalLine'),color:'#00d4ff',data:dates.map(d=>byDate[d].total||null)}],fmtK);
+ // chips: brokers active in this view, ordered by total volume
+ const tot={};for(const d of dates)for(const[c,v]of Object.entries(byDate[d].b))tot[c]=(tot[c]||0)+v;
+ const codes=Object.keys(tot).sort((a,b)=>tot[b]-tot[a]);
+ $('chips').innerHTML=codes.map((c,i)=>{const on=selected.has(c);const col=COLORS[[...selected].indexOf(c)%COLORS.length];return`<span class="chip${on?' on':''}" data-c="${c}" style="${on?'background:'+col:''}">${brokers[c]}</span>`;}).join('');
+ const sel=[...selected].filter(c=>codes.includes(c));
+ const series=sel.map((c,i)=>({name:brokers[c],color:COLORS[i%COLORS.length],data:dates.map(d=>{const o=byDate[d];if(!o.total)return null;const v=o.b[c]||0;return mode==='share'?v/o.total*100:v;})}));
+ lineChart($('c2'),series,mode==='share'?fmtP:fmtK);
+ $('leg').innerHTML=series.map(s=>`<span><i style="background:${s.color}"></i>${s.name}</span>`).join('');}
+
+$('chips').addEventListener('click',e=>{const c=e.target.dataset.c;if(!c)return;selected.has(c)?selected.delete(c):selected.add(c);renderTrend();});
+document.querySelectorAll('.seg button').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.seg button').forEach(x=>x.classList.remove('on'));b.classList.add('on');mode=b.dataset.m;renderTrend();}));
+$('trendBtn').addEventListener('click',()=>{trendOpen=!trendOpen;$('trend').style.display=trendOpen?'block':'none';$('trendBtn').classList.toggle('on',trendOpen);if(trendOpen)renderTrend();});
+
+function update(){const date=$('date').value,view=$('view').value;$('pg').style.display=view==='each'?'flex':'none';
+ if(view==='each'){const ps=products(date);const cur=$('product').value;$('product').innerHTML=ps.map(p=>`<option${p===cur?' selected':''}>${p}</option>`).join('');}
+ const {f,label}=filt();render(rank(r=>r[1]===date&&f(r)),label,date);if(trendOpen)renderTrend();}
+['date','view','product'].forEach(id=>$(id).addEventListener('change',update));update();
+</script></body></html>
